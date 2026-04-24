@@ -1,0 +1,30 @@
+# BytFarm 2.1 — Runtime Dependencies
+# Python >= 3.11 required (tomllib built-in, match statements, type union syntax)
+# Install: pip install -r requirements.txt
+
+# Core system interaction
+psutil>=5.9.0           # CPU, RAM, disk, process metrics
+# wmi>=1.5.1              # Windows WMI — temperatures, GPU utilisation
+
+# Config
+tomli-w>=1.0.0          # TOML write support (tomllib read is built-in Python 3.11+)
+watchdog>=3.0.0         # Config file hot-reload watcher
+
+# OC capability detection
+py-cpuinfo>=9.0.0       # CPU vendor + brand string detection
+
+# Tray icon support
+pystray>=0.19.5         # System tray icon management
+Pillow>=10.0.0          # Image handling for tray icons
+
+# Bundled (ship in vendor/ directory — NOT pip-installed)
+# WinRing0x64.dll       MSR read/write for PL1/PL2 OC
+# WinRing0x64.sys       Kernel driver companion to the DLL
+#
+# Download from: https://github.com/GermanAizek/WinRing0/releases
+# Place both files in: vendor/WinRing0x64.dll and vendor/WinRing0x64.sys
+# BytFarm will fall back to external_tool or monitor_only without them.
+
+# Dev / test only
+pytest>=7.0.0
+pytest-timeout>=2.1.0
