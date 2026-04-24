@@ -1,0 +1,38 @@
+name: Build BytFarm2 Executable
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-2022 # Use a Windows runner for .exe creation
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip' # Cache pip dependencies for faster builds
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller
+        pip install -r requirements.txt
+
+    - name: Display current directory contents (for debugging)
+      run: ls -R
+
+    - name: Build the executable
+      run: pyinstaller BytFarm2.spec
+
+    - name: Upload executable artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: BytFarm2-Executable
+        path: dist/BytFarm2.exe
